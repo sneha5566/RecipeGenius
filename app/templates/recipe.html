@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Recipe Suggestion - RecipeGenius</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #fff5e6, #ffe0b2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 30px 0;
+    }
+
+    .container {
+      max-width: 800px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #ff7043;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h2, h3 {
+      color: #d84315;
+    }
+
+    label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .btn-primary {
+      background-color: #ff7043;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #f4511e;
+    }
+
+    a {
+      color: #ff7043;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .section-divider {
+      border-top: 1px solid #ccc;
+      margin: 30px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Recipe Suggestion</h1>
+
+    <form method="POST">
+      <div class="mb-3">
+        <label for="ingredients">Enter ingredients (comma-separated):</label>
+        <input type="text" class="form-control" name="ingredients" id="ingredients" required>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="time">Cooking Time:</label>
+          <select name="time" class="form-select">
+            <option value="">Any</option>
+            <option value="under 15 minutes">Under 15 min</option>
+            <option value="15 to 30 minutes">15–30 min</option>
+            <option value="30 to 60 minutes">30–60 min</option>
+            <option value="more than 1 hour">More than 1 hr</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label for="difficulty">Difficulty:</label>
+          <select name="difficulty" class="form-select">
+            <option value="">Any</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <label for="cuisine">Cuisine:</label>
+          <select name="cuisine" class="form-select">
+            <option value="">Any</option>
+            <option value="Indian">Indian</option>
+            <option value="Italian">Italian</option>
+            <option value="Mexican">Mexican</option>
+            <option value="Chinese">Chinese</option>
+            <option value="American">American</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Get Recipe</button>
+      </div>
+    </form>
+
+    {% if recipe %}
+    <div class="section-divider"></div>
+
+    <h2>{{ recipe.title }}</h2>
+    <p><strong>Cook Time:</strong> {{ recipe.cook_time }}</p>
+
+    {% if recipe.ingredients %}
+      <h3>Ingredients:</h3>
+      <ul>
+        {% for item in recipe.ingredients %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <h3>Instructions:</h3>
+    <p>{{ recipe.instructions }}</p>
+
+    {% if recipe.nutrition_text %}
+      <h3>Estimated Nutrition:</h3>
+      <p>{{ recipe.nutrition_text }}</p>
+    {% endif %}
+
+    {% if recipe_id %}
+      <p><a href="{{ url_for('recipe.recipe_detail', recipe_id=recipe_id) }}">View Full Recipe</a></p>
+    {% endif %}
+    {% endif %}
+
+    <div class="back-link">
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

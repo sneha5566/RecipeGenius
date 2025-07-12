@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meal Planner - RecipeGenius</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #fdf6ec, #ffe0b2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px 0;
+    }
+
+    .container {
+      max-width: 850px;
+      background-color: #fffefc;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #ff7043;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #e64a19;
+      margin-top: 40px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    textarea, select, input[type="text"] {
+      margin-top: 5px;
+    }
+
+    .btn-primary {
+      background-color: #ff7043;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #f4511e;
+    }
+
+    .plan-entry {
+      background-color: #fff3e0;
+      border-left: 6px solid #ffa726;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .plan-entry a {
+      margin-left: 10px;
+      color: #e64a19;
+      text-decoration: none;
+    }
+
+    .plan-entry a:hover {
+      text-decoration: underline;
+    }
+
+    .meal-img {
+      display: block;
+      max-width: 180px;
+      margin: 0 auto 20px;
+      border-radius: 12px;
+    }
+
+    .links {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #ff7043;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .emoji-header {
+      font-size: 1.4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="emoji-header">
+      <img src="https://cdn-icons-png.flaticon.com/512/3132/3132693.png" alt="Meal Icon" width="40">
+      <h1>🍽️ Weekly Meal Planner</h1>
+    </div>
+
+    <img src="{{ url_for('static', filename='images/screenshot.png') }}" alt="Illustration" class="img-fluid">
+
+
+    <form method="POST">
+      <label>📋 Recipe Name:</label>
+      <input type="text" name="recipe_name" class="form-control" required>
+
+      <label for="ingredients">🥕 Ingredients (comma-separated):</label>
+      <textarea name="ingredients" rows="4" class="form-control" required></textarea>
+
+      <label>📅 Day of the Week:</label>
+      <select name="day" class="form-select" required>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday">Saturday</option>
+          <option value="Sunday">Sunday</option>
+      </select>
+
+      <div class="d-grid mt-3">
+        <button type="submit" class="btn btn-primary">✅ Add to Meal Plan</button>
+      </div>
+    </form>
+
+    <h2 class="mt-5">🗓️ Your Weekly Plan</h2>
+    {% for plan in plans %}
+      <div class="plan-entry">
+        <strong>{{ plan.day_of_week }}:</strong> {{ plan.recipe_name }}
+        <a href="{{ url_for('meal_planner.edit_plan', plan_id=plan.id) }}">✏️ Edit</a>
+        <a href="{{ url_for('meal_planner.delete_plan', plan_id=plan.id) }}">❌ Delete</a>
+      </div>
+    {% else %}
+      <p>No meals planned yet. Start planning your week! 🧁</p>
+    {% endfor %}
+
+    <div class="links">
+      <p><a href="{{ url_for('meal_planner.export_meal_plan') }}">📄 Download Meal Plan (CSV)</a></p>
+      <p><a href="{{ url_for('shopping.shopping_list') }}">🛒 View Shopping List</a></p>
+      <p><a href="{{ url_for('home') }}">🏠 Back to Dashboard</a></p>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

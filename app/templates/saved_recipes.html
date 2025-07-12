@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Saved Recipes - RecipeGenius</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(to right, #fffaf0, #ffe0b2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 40px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px;
+      background: #fffdf8;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      color: #e67e22;
+      margin-bottom: 30px;
+    }
+
+    .recipe-card {
+      background-color: #fff3e0;
+      border-left: 6px solid #ffa726;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .recipe-card h2 {
+      color: #d84315;
+    }
+
+    .recipe-card p {
+      margin-bottom: 10px;
+    }
+
+    .delete-btn {
+      display: inline-block;
+      margin-top: 10px;
+      color: #c62828;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .delete-btn:hover {
+      text-decoration: underline;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #888;
+      margin-top: 40px;
+    }
+
+    .empty-state img {
+      width: 150px;
+      margin: 20px auto;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #ff7043;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💾 Your Saved Recipes</h1>
+
+    {% if saved %}
+      {% for recipe in saved %}
+        <div class="recipe-card">
+          <h2>🍽️ {{ recipe.title }}</h2>
+          <p><strong>🥕 Ingredients:</strong><br> {{ recipe.ingredients }}</p>
+          <p><strong>📖 Instructions:</strong><br> {{ recipe.instructions }}</p>
+          <a href="{{ url_for('saved.delete_saved', recipe_id=recipe.id) }}" class="delete-btn">❌ Delete Recipe</a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <img src="https://cdn-icons-png.flaticon.com/512/857/857681.png" alt="No recipes">
+        <p>No saved recipes yet. Start cooking and save your favorites! 🍝</p>
+      </div>
+    {% endif %}
+
+    <a href="{{ url_for('home') }}" class="back-link">← Back to Home</a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

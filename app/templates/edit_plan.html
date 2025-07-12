@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Meal Plan - RecipeGenius</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(to right, #fff8e1, #ffe0b2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      background: #fffdf7;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #ff7043;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    .btn-primary {
+      background-color: #ff7043;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #f4511e;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+      color: #ff7043;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .edit-img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 180px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Edit Meal Plan</h1>
+
+    <!-- 🖼️ Meal Planner Illustration -->
+    <img src="{{ url_for('static', filename='images/edit_meal.png') }}" alt="Edit Meal Plan" class="edit-img">
+
+    <form method="POST">
+      <label for="recipe_name">🍽️ Recipe Name:</label>
+      <input type="text" name="recipe_name" value="{{ plan.recipe_name }}" class="form-control" required>
+
+      <label for="day">📅 Day of the Week:</label>
+      <select name="day" class="form-select" required>
+        {% for d in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] %}
+          <option value="{{ d }}" {% if plan.day_of_week == d %}selected{% endif %}>{{ d }}</option>
+        {% endfor %}
+      </select>
+
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-primary">✅ Update Plan</button>
+      </div>
+    </form>
+
+    <a href="{{ url_for('meal_planner.meal_planner') }}" class="back-link">← Back to Meal Planner</a>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
