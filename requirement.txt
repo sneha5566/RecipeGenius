@@ -8,6 +8,7 @@ Flask==3.1.1
 Flask-Migrate==4.1.0
 Flask-SQLAlchemy==3.1.1
 fsspec==2025.5.1
+git-filter-repo==2.47.0
 hf-xet==1.1.5
 huggingface-hub==0.33.2
 idna==3.10
@@ -15,6 +16,8 @@ itsdangerous==2.2.0
 Jinja2==3.1.6
 Mako==1.3.10
 MarkupSafe==3.0.2
+mpmath==1.3.0
+networkx==3.5
 numpy==2.3.1
 packaging==25.0
 python-dotenv==1.1.1
@@ -22,8 +25,11 @@ PyYAML==6.0.2
 regex==2024.11.6
 requests==2.32.4
 safetensors==0.5.3
+setuptools==80.9.0
 SQLAlchemy==2.0.41
+sympy==1.14.0
 tokenizers==0.21.2
+torch==2.7.1
 tqdm==4.67.1
 transformers==4.53.0
 typing_extensions==4.14.0
